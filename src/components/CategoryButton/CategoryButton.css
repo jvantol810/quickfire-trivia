@@ -1,0 +1,67 @@
+* {
+    box-sizing: border-box;
+}
+.category-button-container {
+    overflow: hidden;
+}
+/* Give the square buttons the same size as the grid-item containing them */
+.category-button {
+    height: 100vh;
+    width: 100%;
+    margin: 0 0 0 0;
+    padding: 0 0 0 0;
+    text-align: center;
+    font-family: 'Bangers', serif;
+    -webkit-text-fill-color: white;
+    -webkit-text-stroke: 1px rgba(82, 82, 82, 0.521);
+    letter-spacing: 5px;
+    font-size: 5vmax;
+    text-shadow: rgb(0, 0, 0) 2px 2px 50px, rgb(0, 60, 255) 0.5px 0 2px;
+    transition: all ease-in-out 0.6s;
+}
+
+.category-button:hover {
+    opacity: 95%;
+    transform: scale(1.1);
+}
+
+/* Trivia button styling */
+.category-arts_and_literature {
+    background-color: rgb(255, 87, 51);
+}
+
+.category-film_and_tv {
+    background-color: rgb(255, 30, 30)
+}
+
+.category-food_and_drink {
+    background-color: rgb(176, 38, 255);
+}
+
+.category-general_knowledge {
+    background-color: rgb(57, 255, 20);
+}
+
+.category-science {
+    background-color: rgb(0, 255, 209)
+}
+
+.category-history {
+    background-color: rgb(255, 255, 0);
+    /* background-image: url("../../assets/images/history/colosseum-photo.jpg"); */
+}
+
+.category-sport_and_leisure {
+    background-color: rgb(49, 198, 212)
+}
+
+.category-music {
+    background-color: rgb(216, 0, 166);
+}
+
+.category-society_and_culture {
+    background-color: rgb(250, 218, 157);
+}
+.category-geography {
+    background-color: rgb(157, 241, 223);
+}
