@@ -16,6 +16,7 @@ export default function TimerBar(props) {
 		if(currentWidth - (widthPerSecond) <= 0) {
 			setCurrentWidth(0);
 			setSecondsRemaining(0);
+			props.handleTimerEnded();
 			return;
 		}
 		if(widthPerSecond <= 0) {return;}
@@ -40,7 +41,7 @@ export default function TimerBar(props) {
 		else if(props.isRunning && props.addTime > 0){
 			incrementTimer(props.addTime);
 		}
-	}, [secondsRemaining, currentWidth, delay])
+	}, [secondsRemaining, currentWidth, delay, props.isRunning])
 
 
   return (

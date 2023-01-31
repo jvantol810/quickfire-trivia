@@ -8,6 +8,7 @@ import Popup from './components/Popups/Popup.js';
 import TimerBar from './components/TimerBar/TimerBar.js';
 import CategoryButton from './components/CategoryButton/CategoryButton.js';
 import {getTriviaQuestion, getRandomTriviaCategory, getAllTriviaCategories} from './trivia.js';
+import GameOver from './components/GameOver/GameOver.js';
 
 /* React Components */
 
@@ -39,10 +40,8 @@ const Game = () => {
     const [currentTriviaAnswers, setCurrentTriviaAnswers] = useState("");
     const [currentTriviaCategories, setCurrentTriviaCategories] = useState();
     const [triggerCategoryRefresh, setTriggerCategoryRefresh] = useState(true);
-    const [isTimerRunning, setIsTimerRunning] = useState(true);
-    const [timeChange, setTimeChange] = useState(-1);
-
-
+    const [triggerGameRefresh, setTriggerGameRefresh] = useState(false);
+    const [gameOver, setGameOver] = useState(false);
 
     const [timerSettings, setTimerSettings] = useState({
         startingSeconds: 60,
@@ -52,7 +51,6 @@ const Game = () => {
     });
 
     const handleTimeAdded = () => {
-        console.log("Time has been added.");
         setTimerSettings({...timerSettings, addTime: 0});
     }
 
@@ -77,10 +75,17 @@ const Game = () => {
         setTriggerCategoryRefresh(true);
         setQuestionPopup(false);        
     }
-    
-   
 
-    console.log("Timer settings: " + JSON.stringify(timerSettings));
+    const handleTimerEnded = () => {
+        setTimerSettings({...timerSettings, isTimerRunning: false});
+        setGameOver(true);
+    }
+
+    const restartGame = () => {
+        setTimerSettings({...timerSettings, isTimerRunning: true, addTime: timerSettings.startingSeconds});
+        setTriggerCategoryRefresh(true);
+        setGameOver(false);
+    }
 
     useEffect(() => {
         if(triggerCategoryRefresh){
@@ -94,12 +99,19 @@ const Game = () => {
     //Assign each button on the board with a different, random category
     return (
         <div className="game">
-            <TimerBar startingSeconds={timerSettings?.startingSeconds} isRunning={timerSettings?.isTimerRunning} addTime={timerSettings?.addTime} handleTimeAdded={handleTimeAdded}/>
+            <TimerBar startingSeconds={timerSettings?.startingSeconds} isRunning={timerSettings?.isTimerRunning} addTime={timerSettings?.addTime} 
+            handleTimeAdded={handleTimeAdded} handleTimerEnded={handleTimerEnded}/>
             <Board handleClick={handleCategoryButtonClick} triviaCategories={currentTriviaCategories}/>
             <Popup trigger={questionPopup} 
                    setTrigger={setQuestionPopup} 
                    children={
                         <TriviaQuestion question={currentTriviaQuestion} answers={currentTriviaAnswers} handleClick={handleTriviaAnswerClick}/>
+                    }>
+            </Popup>
+            <Popup  trigger={gameOver} 
+                    setTrigger={setGameOver}
+                    children={
+                        <GameOver handlePlayAgain={restartGame}/>
                     }>
             </Popup>
         </div>
