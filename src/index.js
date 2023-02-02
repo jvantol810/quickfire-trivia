@@ -7,16 +7,10 @@ import TriviaQuestion from './components/TriviaQuestions/TriviaQuestion.js';
 import Popup from './components/Popups/Popup.js';
 import TimerBar from './components/TimerBar/TimerBar.js';
 import CategoryButton from './components/CategoryButton/CategoryButton.js';
-import {getTriviaQuestion, getRandomTriviaCategory, getAllTriviaCategories} from './trivia.js';
+import {getTriviaQuestion, getRandomTriviaCategory} from './trivia.js';
 import GameOver from './components/GameOver/GameOver.js';
 
 /* React Components */
-
-
-const useForceUpdate = () => {
-    const [value, setValue] = useState(0);
-    return () => setValue(value => value + 1); // update state to force render
-}
 
 const Board = (props) => {
     const handleCategoryButtonClick = (triviaCategory) => {
@@ -40,14 +34,14 @@ const Game = () => {
     const [currentTriviaAnswers, setCurrentTriviaAnswers] = useState("");
     const [currentTriviaCategories, setCurrentTriviaCategories] = useState();
     const [triggerCategoryRefresh, setTriggerCategoryRefresh] = useState(true);
-    const [triggerGameRefresh, setTriggerGameRefresh] = useState(false);
     const [gameOver, setGameOver] = useState(false);
 
     const [timerSettings, setTimerSettings] = useState({
         startingSeconds: 60,
-        isTimerRunning: true,
+        isRunning: true,
         addTime: 0,
-        handleTimeAdded: () => handleTimeAdded()
+        handleTimeAdded: () => handleTimeAdded(),
+        handleTimerEnded: () => handleTimerEnded()
     });
 
     const handleTimeAdded = () => {
@@ -99,8 +93,8 @@ const Game = () => {
     //Assign each button on the board with a different, random category
     return (
         <div className="game">
-            <TimerBar startingSeconds={timerSettings?.startingSeconds} isRunning={timerSettings?.isTimerRunning} addTime={timerSettings?.addTime} 
-            handleTimeAdded={handleTimeAdded} handleTimerEnded={handleTimerEnded}/>
+            <TimerBar startingSeconds={timerSettings?.startingSeconds} isRunning={timerSettings?.isRunning} addTime={timerSettings?.addTime} 
+            handleTimeAdded={timerSettings?.handleTimeAdded} handleTimerEnded={timerSettings?.handleTimerEnded}/>
             <Board handleClick={handleCategoryButtonClick} triviaCategories={currentTriviaCategories}/>
             <Popup trigger={questionPopup} 
                    setTrigger={setQuestionPopup} 
@@ -128,16 +122,3 @@ root.render(
         <Game />
     </div>
 )
-
-/* Helper Functions */
-function getRandomInt(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-const createQuestion = (categoryId) => {
-    //Fetch the results of a question from some trivia API...
-    //Render the question popup component, with the question text retrived from the api, to the screen
-
-}

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import './triviaQuestion.css'
 
 function TriviaQuestion(props) {
-  const [currentAnswerIndex, setCurrentAnswerIndex] = useState(null);
   const [answerIndexSubmitted, setAnswerIndexSubmitted] = useState(-1);
   const [buttonClasses, setButtonClasses] = useState(['','','','']);
   const [buttonClassesInitialized, setButtonClassesInitialized] = useState(false);
@@ -17,8 +16,8 @@ function TriviaQuestion(props) {
       setTimeout(() => {
         props.answers.find((answer, index) => {
           if(answer.isCorrect) {
-            console.log("Correct answer index: " + index);
             updateButtonClasses(index, 'submitted');
+            return index;
           }
         })
       }, 400)
@@ -32,7 +31,7 @@ function TriviaQuestion(props) {
   useEffect(
     () => {
       
-      if(answerIndexSubmitted != -1 && !answerSubmitted) {
+      if(answerIndexSubmitted !== -1 && !answerSubmitted) {
         console.log("answer index submitted.")
         updateButtonClasses(answerIndexSubmitted, 'submitted');
         setAnswerSubmitted(true);
@@ -56,7 +55,7 @@ function TriviaQuestion(props) {
   }
 
   const initializeAnswerButtons = async () => {
-    if(!buttonClassesInitialized || props.answers == undefined) {return}
+    if(!buttonClassesInitialized || props.answers === undefined) {return}
     setAnswerButtons(
       [
         <button className = {buttonClasses[0]} onClick={() => handleClick(props.answers[0], 0)}> {props.answers[0].text} </button>,

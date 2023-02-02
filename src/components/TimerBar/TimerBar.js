@@ -1,7 +1,5 @@
 import React, {useState, useEffect, useRef} from 'react'
 import './TimerBar.css'
-import { Spring, animated, useSpring, easings } from 'react-spring';
-import useMeasure from 'react-use-measure';
 
 export default function TimerBar(props) {
 	const ref = useRef();
@@ -10,8 +8,8 @@ export default function TimerBar(props) {
 	const [startingWidth, setStartingWidth] = useState(null);
 	const [widthPerSecond, setWidthPerSecond] = useState(null);
 	const [delay, setDelay] = useState(0);
-	const [animationSpeed, setAnimationSpeed] = useState(1);
-
+	const [animationSpeed] = useState(1);
+	
     const decrementTimer = () => {
 		if(currentWidth - (widthPerSecond) <= 0) {
 			setCurrentWidth(0);

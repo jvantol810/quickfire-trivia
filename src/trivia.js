@@ -2,7 +2,7 @@
     Returns a trivia question following the category passed in.
 </summary>
 export async function getTriviaQuestion(category) {
-    let response = await fetch(`https://the-trivia-api.com/api/questions?limit=20&categories=${category}`, {
+    let response = await fetch(`https://the-trivia-api.com/api/questions?limit=20&categories=${category}&difficulty=medium`, {
         headers: {
           'Content-Type': 'application/json'
         },
@@ -38,7 +38,8 @@ const processTriviaQuestionJSON = (questionJSON) => {
     const processedQuestionJSON = {
         question: questionText,
         answers: shuffleArray(possibleAnswers),
-        category: questionJSON[0]["category"]
+        category: questionJSON[0]["category"],
+        difficulty: questionJSON[0]["difficulty"]
     }
     return processedQuestionJSON;
 }
@@ -84,7 +85,7 @@ function shuffleArray(array) {
       randomIndex;
   
     // While there remain elements to shuffle.
-    while (index != 0) {
+    while (index !== 0) {
       // Pick a remaining element.
       randomIndex = Math.floor(Math.random() * index);
       index--;
